@@ -1,0 +1,73 @@
+This Tapestry component library implements the Facebook XFBML async javascript library. It will also write OpenGraph meta tags.
+
+Currently to use the components you need to add
+
+    public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration, 
+    		final Logger logger, final Environment environment) {
+    	 MarkupRendererFilter documentLinker = new MarkupRendererFilter()
+    	 	        {
+    	 	            public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer)
+    	 	            {
+    	 	                FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger);
+    	 	
+    	 	                environment.push(FBAsyncSupport.class, linker);
+    	 	
+    	 	                renderer.renderMarkup(writer);
+    	 	
+    	 	                environment.pop(FBAsyncSupport.class);
+    	 	
+    	 	                linker.updateDocument(writer.getDocument());
+    	 	            }
+    	 	        };
+    	 	       configuration.add("FBAsyncLinker", documentLinker);
+    }
+    
+    public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration)
+    {
+        configuration.add(new LibraryMapping("fb", "com.trsvax.tapestry.facebook"));
+    }
+    
+to your AppModule file. As the library becomes more stable I'll add that into the library AppModule.
+
+
+To use the tags on a page you'll need at least the <t:fb.asyncInit t:id="fbinit"/> element in your page/layout file and
+something like the following in your java file.
+
+    @Property
+    private FBInit fbInit;
+    
+    @SetupRender
+    void setupRender() {
+    	fbInit = new FBInit();
+    	fbInit.setAppID("your facebook app id");
+    	fbInit.setCookie(true);
+    	fbInit.setStatus(true);
+    }
+   
+Then
+
+<t:fb.like />
+
+which by default has the following events
+
+	void onEdgeCreate(@RequestParameter("url") String url) {
+		logger.info("edge create {}",url);
+	}
+	
+	void onEdgeRemove(@RequestParameter("url") String url) {
+		logger.info("edge remove {}",url);
+	}
+	
+If you want OpenGraph tags
+
+@Environmental
+private FBAsyncSupport fbAsyncSupport;
+
+@SetupRender
+void setupRender() {
+	Tags tags = new Tags();
+	tags.setSomeStuff();
+	fbAsyncSupport.setTags(tags);
+}
+
+    
