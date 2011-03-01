@@ -13,3 +13,5 @@ local.properties
 .classpath
 .settings/
 .loadpath
+.idea
+tapestry-facebook.iml
