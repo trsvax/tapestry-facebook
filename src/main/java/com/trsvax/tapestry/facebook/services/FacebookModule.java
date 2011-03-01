@@ -12,29 +12,32 @@ import org.slf4j.Logger;
 
 public class FacebookModule {
 
-    public static void bind(ServiceBinder binder) {
-    }
+	public static void bind(ServiceBinder binder) {
+	}
 
 
-    public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
-        configuration.add(new LibraryMapping("fb", "com.trsvax.tapestry.facebook"));
-    }
+	public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
+		configuration.add(new LibraryMapping("fb", "com.trsvax.tapestry.facebook"));
+	}
 
-    public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
-                                         final Logger logger, final Environment environment) {
-        MarkupRendererFilter documentLinker = new MarkupRendererFilter() {
-            public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
-                FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger);
+	public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
+	                                     final Logger logger, final Environment environment) {
 
-                environment.push(FBAsyncSupport.class, linker);
+		MarkupRendererFilter documentLinker = new MarkupRendererFilter() {
 
-                renderer.renderMarkup(writer);
+			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
+				FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger);
 
-                environment.pop(FBAsyncSupport.class);
+				environment.push(FBAsyncSupport.class, linker);
 
-                linker.updateDocument(writer.getDocument());
-            }
-        };
-        configuration.add("FBAsyncLinker", documentLinker);
-    }
+				renderer.renderMarkup(writer);
+
+				environment.pop(FBAsyncSupport.class);
+
+				linker.updateDocument(writer.getDocument());
+			}
+		};
+
+		configuration.add("FBAsyncLinker", documentLinker);
+	}
 }
