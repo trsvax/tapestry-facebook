@@ -16,34 +16,13 @@
 
 This Tapestry component library implements the Facebook XFBML async javascript library. It will also write OpenGraph meta tags.
 
-Currently to use the components you need to add
+Currently to use the components you need to build the source then add the following to your pom file.
 
-    public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration, 
-    		final Logger logger, final Environment environment) {
-    	 MarkupRendererFilter documentLinker = new MarkupRendererFilter()
-    	 	        {
-    	 	            public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer)
-    	 	            {
-    	 	                FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger);
-    	 	
-    	 	                environment.push(FBAsyncSupport.class, linker);
-    	 	
-    	 	                renderer.renderMarkup(writer);
-    	 	
-    	 	                environment.pop(FBAsyncSupport.class);
-    	 	
-    	 	                linker.updateDocument(writer.getDocument());
-    	 	            }
-    	 	        };
-    	 	       configuration.add("FBAsyncLinker", documentLinker);
-    }
-    
-    public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration)
-    {
-        configuration.add(new LibraryMapping("fb", "com.trsvax.tapestry.facebook"));
-    }
-    
-to your AppModule file. As the library becomes more stable I'll add that into the library AppModule.
+     <dependency>
+    	<groupId>com.trsvax</groupId>
+    	<artifactId>tapestry-facebook</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
 
 
 To use the tags on a page you'll need at least the <t:fb.asyncInit t:id="fbinit"/> element in your page/layout file and
