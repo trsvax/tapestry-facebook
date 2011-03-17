@@ -12,12 +12,11 @@ import org.apache.tapestry5.dom.Document;
 import org.apache.tapestry5.dom.Element;
 import org.slf4j.Logger;
 
-import com.trsvax.tapestry.facebook.FBInit;
 import com.trsvax.tapestry.facebook.opengraph.Tags;
 
 public class FBAsyncSupportImpl implements FBAsyncSupport {
+
 	private final Logger logger;
-	private FBInit fbinit;
 	private Tags tags;
 	private boolean render = false;
 	private StringWriter initWriter = new StringWriter();
@@ -38,11 +37,6 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 			events.put(event,s);
 		}
 		s.add(containerID);
-	}
-	
-	public void init(FBInit fbinit) {
-		render();
-		this.fbinit = fbinit;
 	}
 	
 	public void init(String init) {
@@ -96,7 +90,7 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 
 	void script(Element script) {
 		script.raw("window.fbAsyncInit = function() {\n");
-		script.raw("FB.init({" + initString() + "});\n");
+//		script.raw("FB.init({" + initString() + "});\n");
 		script.raw(initWriter.toString());
 				
 		for ( Entry<String, Set<String>> e : events.entrySet()) {
@@ -153,43 +147,6 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 	}
 
 
-	
-	String initString() {		
-		String sep = "";
-		StringWriter s = new StringWriter();
-		//s.append("({");
-		if ( fbinit.getAppID() != null ) {
-			s.append(sep);
-			sep = ",";
-			s.append("appId: '");
-			s.append(fbinit.getAppID());
-			s.append("'");
-		}
-		if ( fbinit.getCookie() != null ) {
-			s.append(sep);
-			sep = ",";
-			s.append("cookie: " + fbinit.getCookie());
-		}
-		if ( fbinit.getLogging() != null ) {
-			s.append(sep);
-			sep = ",";
-			s.append("logging: " + fbinit.getLogging());
-		}
-		if ( fbinit.getStatus() != null ) {
-			s.append(sep);
-			sep = ",";
-			s.append("status: " + fbinit.getStatus());
-		}
-		if ( fbinit.getXfbml() != null ) {
-			s.append(sep);
-			sep = ",";
-			s.append("xfbml: " + fbinit.getXfbml());
-		}
-		
-		return s.toString();
-		
-	}
-	
 	String fb2tap(String event) {
 		String t = null;
 		

@@ -24,15 +24,12 @@ public class Like {
 	@Parameter(value = "literal:edge.create,edge.remove")
 	private String events;
 	
-	@Environmental
-	private FBAsyncSupport fbAsync;
-
 	@Inject
 	private ComponentResources resources;
 
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
-		fbAsync.render();
+
 		writer.element("fb:like");
 		resources.renderInformalParameters(writer);
 		writer.end();
@@ -40,9 +37,12 @@ public class Like {
 		if ( events == null || events.length() == 0 ) {
 			return;
 		}
+
+/*
 		for ( String e : events.split(",")) {
 			fbAsync.subscribe(e.trim(),resources);
 		}
+*/
 
 	}
 	
