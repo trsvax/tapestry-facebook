@@ -29,13 +29,11 @@ public class Like {
 				"});" +
 			"});\n";
 
-
 	@Parameter(value = "literal:edge.create,edge.remove")
 	private String events;
 
 	@Inject
 	private ComponentResources resources;
-
 
 	/**
 	 * Used to include scripting code in the rendered page.
@@ -46,7 +44,7 @@ public class Like {
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
 
-		writer.element("fb:like");
+		writer.element(getElement());
 		resources.renderInformalParameters(writer);
 		writer.end();
 
@@ -61,5 +59,9 @@ public class Like {
 			javascriptSupport.addScript(subscribeScript, event, link.toURI());
 		}
 
+	}
+
+	public String getElement() {
+		return "fb:like";
 	}
 }
