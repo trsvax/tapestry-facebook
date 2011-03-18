@@ -22,6 +22,7 @@ import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
+import org.apache.tapestry5.services.RequestGlobals;
 import org.slf4j.Logger;
 
 public class FBModule {
@@ -31,12 +32,12 @@ public class FBModule {
     }
 	
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration, 
-    		final Logger logger, final Environment environment) {
+    		final Logger logger, final Environment environment, final RequestGlobals requestGlobals) {
     	 MarkupRendererFilter documentLinker = new MarkupRendererFilter()
     	 	        {
     	 	            public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer)
     	 	            {
-    	 	                FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger);
+    	 	                FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger, requestGlobals);
     	 	
     	 	                environment.push(FBAsyncSupport.class, linker);
     	 	

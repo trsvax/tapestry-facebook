@@ -25,6 +25,7 @@ import java.util.Set;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.dom.Document;
 import org.apache.tapestry5.dom.Element;
+import org.apache.tapestry5.services.RequestGlobals;
 import org.slf4j.Logger;
 
 import com.trsvax.tapestry.facebook.FBInit;
@@ -32,6 +33,9 @@ import com.trsvax.tapestry.facebook.opengraph.Tags;
 
 public class FBAsyncSupportImpl implements FBAsyncSupport {
 	private final Logger logger;
+	private final RequestGlobals requestGlobals;
+	private final String context;
+	
 	private FBInit fbinit;
 	private Tags tags;
 	private boolean render = false;
@@ -39,20 +43,32 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 
 	private Map<String, Set<String>> events = new HashMap<String, Set<String>>();
 
-	public FBAsyncSupportImpl(Logger logger) {
+	public FBAsyncSupportImpl(Logger logger, RequestGlobals requestGlobals) {
 		this.logger = logger;
-		
+		this.requestGlobals = requestGlobals;
+		String c = requestGlobals.getHTTPServletRequest().getContextPath();
+		if ( c == null ) {
+			c = "/";
+		}
+		if ( ! c.endsWith("/")) {
+			c+="/";
+		}
+		context = c;
 	}
 	
 	public void subscribe(String event,ComponentResources resources) {
 		render();
 		String containerID = resources.getContainerResources().getCompleteId() + ":" + fb2tap(event) ;
+		//String url = resources.createEventLink(event).toAbsoluteURI();
+		String url = resources.getContainerResources().createEventLink(fb2tap(event)).toAbsoluteURI();
+		url = url.replace(":8080", "");
 		Set<String> s = events.get(event);
 		if ( s == null ) {
 			s = new HashSet<String>();
 			events.put(event,s);
 		}
-		s.add(containerID);
+		//s.add(containerID);
+		s.add(url);
 	}
 	
 	public void init(FBInit fbinit) {
@@ -226,7 +242,7 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 	String subscribe(String event, String url) {
 		return String.format("FB.Event.subscribe('%s', function(response){" +
 				//"alert(response);" +
-				"Tapestry.ajaxRequest('/%s', {" +
+				"Tapestry.ajaxRequest('%s', {" +
 					"method : 'get'," +
 					"parameters : {" +
 					"url : response }" +
