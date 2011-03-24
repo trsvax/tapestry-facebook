@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,12 +19,41 @@ import org.apache.tapestry5.ComponentResources;
 import com.trsvax.tapestry.facebook.FBInit;
 import com.trsvax.tapestry.facebook.opengraph.Tags;
 
-public interface FBAsyncSupport {
-	
+/**
+ * 
+ * @author massimo
+ * 
+ */
+public interface FBAsyncSupport
+{
+	/**
+	 * 
+	 * @param fbinit
+	 */
 	public void init(FBInit fbinit);
+
+	/**
+	 * 
+	 * @param init
+	 */
 	public void init(String init);
+
+	/**
+	 * 
+	 * @param tags
+	 */
 	public void meta(Tags tags);
+
+	/**
+	 * 
+	 * @param event
+	 * @param resources
+	 */
 	public void subscribe(String event, ComponentResources resources);
+
+	/**
+	 * 
+	 */
 	public void render();
 
 }

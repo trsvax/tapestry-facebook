@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,29 +23,29 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
 
-
 /**
- * @author bfb
- * Facebook XFBML Livestream component
- * @see <a href="http://developers.facebook.com/docs/reference/plugins/facepile/">Livestream</a>
- *
+ * @author bfb Facebook XFBML Livestream component
+ * @see <a
+ *      href="http://developers.facebook.com/docs/reference/plugins/facepile/">Livestream</a>
+ * 
  */
 @SupportsInformalParameters
-public class Livestream {
-	
+public class Livestream
+{
+
 	@Inject
 	private ComponentResources componentResources;
-	
+
 	@Environmental
 	private FBAsyncSupport fbAsyncSupport;
 
 	@BeginRender
-	void beginRender(MarkupWriter writer) {
+	void beginRender(MarkupWriter writer)
+	{
 		fbAsyncSupport.render();
 		writer.element("fb:live-stream");
 		componentResources.renderInformalParameters(writer);
 		writer.end();
 	}
-
 
 }

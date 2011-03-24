@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,22 +24,22 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
 
 /**
- * @author bfb
- * Facebook XFBML ShareButton component
- * replace kind'a by the like button
- *
+ * @author bfb Facebook XFBML ShareButton component replace kind'a by the like
+ *         button
+ * 
  */
 @SupportsInformalParameters
-public class ShareButton {
+public class ShareButton
+{
 	@Inject
 	private ComponentResources componentResources;
-	
+
 	@Environmental
 	private FBAsyncSupport fbAsyncSupport;
-	
 
 	@BeginRender
-	void beginRender(MarkupWriter writer) {
+	void beginRender(MarkupWriter writer)
+	{
 		fbAsyncSupport.render();
 		writer.element("fb:share-button");
 		componentResources.renderInformalParameters(writer);

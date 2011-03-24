@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,29 +23,29 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
 
-
 /**
- * @author bfb
- * Facebook XFBML Facepile component
- * @see <a href="http://developers.facebook.com/docs/reference/plugins/facepile/">Facepile</a>
- *
+ * @author bfb Facebook XFBML Facepile component
+ * @see <a
+ *      href="http://developers.facebook.com/docs/reference/plugins/facepile/">Facepile</a>
+ * 
  */
 @SupportsInformalParameters
-public class Facepile {
-	
+public class Facepile
+{
+
 	@Inject
 	private ComponentResources componentResources;
-	
+
 	@Environmental
 	private FBAsyncSupport fbAsyncSupport;
 
 	@BeginRender
-	void beginRender(MarkupWriter writer) {
+	void beginRender(MarkupWriter writer)
+	{
 		fbAsyncSupport.render();
 		writer.element("fb:facepile");
 		componentResources.renderInformalParameters(writer);
 		writer.end();
 	}
-
 
 }

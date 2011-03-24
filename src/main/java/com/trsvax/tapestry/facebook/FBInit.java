@@ -14,74 +14,85 @@
 
 package com.trsvax.tapestry.facebook;
 
+public class FBInit
+{
 
-public class FBInit {
-	
-	private String appID;	
-	private Boolean cookie;	
-	private Boolean logging;	
-	private Object session;	
-	private Boolean status;	
-	private Boolean xfbml = true;	
+	private String appID;
+	private Boolean cookie;
+	private Boolean logging;
+	private Object session;
+	private Boolean status;
+	private Boolean xfbml = true;
 	private String channelURL;
 
-	public String getAppID() {
+	public String getAppID()
+	{
 		return appID;
 	}
 
-	public void setAppID(String appID) {
+	public void setAppID(String appID)
+	{
 		this.appID = appID;
 	}
 
-	public Boolean getCookie() {
+	public Boolean getCookie()
+	{
 		return cookie;
 	}
 
-	public void setCookie(Boolean cookie) {
+	public void setCookie(Boolean cookie)
+	{
 		this.cookie = cookie;
 	}
 
-	public Boolean getLogging() {
+	public Boolean getLogging()
+	{
 		return logging;
 	}
 
-	public void setLogging(Boolean logging) {
+	public void setLogging(Boolean logging)
+	{
 		this.logging = logging;
 	}
 
-	public Object getSession() {
+	public Object getSession()
+	{
 		return session;
 	}
 
-	public void setSession(Object session) {
+	public void setSession(Object session)
+	{
 		this.session = session;
 	}
 
-	public Boolean getStatus() {
+	public Boolean getStatus()
+	{
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Boolean status)
+	{
 		this.status = status;
 	}
 
-	public Boolean getXfbml() {
+	public Boolean getXfbml()
+	{
 		return xfbml;
 	}
 
-	public void setXfbml(Boolean xfbml) {
+	public void setXfbml(Boolean xfbml)
+	{
 		this.xfbml = xfbml;
 	}
 
-	public String getChannelURL() {
+	public String getChannelURL()
+	{
 		return channelURL;
 	}
 
-	public void setChannelURL(String channelURL) {
+	public void setChannelURL(String channelURL)
+	{
 		this.channelURL = channelURL;
 	}
-	
-
-	
 
 }

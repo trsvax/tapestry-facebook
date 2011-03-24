@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,18 +22,19 @@ import org.apache.tapestry5.annotations.Parameter;
 import com.trsvax.tapestry.facebook.FBInit;
 import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
 
-public class AsyncInit {
-	
-	@Parameter(autoconnect=true,required=true)
+public class AsyncInit
+{
+
+	@Parameter(autoconnect = true, required = true)
 	private FBInit fbinit;
-	
+
 	@Environmental
 	private FBAsyncSupport fbAsyncSupport;
 
 	@BeginRender
-	void beginRender(MarkupWriter writer) {				
-		fbAsyncSupport.init(fbinit);		
+	void beginRender(MarkupWriter writer)
+	{
+		fbAsyncSupport.init(fbinit);
 	}
 
 }
-

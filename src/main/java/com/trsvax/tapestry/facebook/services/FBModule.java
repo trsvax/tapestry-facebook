@@ -22,38 +22,43 @@ import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
-import org.apache.tapestry5.services.RequestGlobals;
 import org.slf4j.Logger;
 
-public class FBModule {
-	
-    public static void bind(ServiceBinder binder)
-    {
-    }
-	
-    public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration, 
-    		final Logger logger, final Environment environment, final RequestGlobals requestGlobals) {
-    	 MarkupRendererFilter documentLinker = new MarkupRendererFilter()
-    	 	        {
-    	 	            public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer)
-    	 	            {
-    	 	                FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger, requestGlobals);
-    	 	
-    	 	                environment.push(FBAsyncSupport.class, linker);
-    	 	
-    	 	                renderer.renderMarkup(writer);
-    	 	
-    	 	                environment.pop(FBAsyncSupport.class);
-    	 	
-    	 	                linker.updateDocument(writer.getDocument());
-    	 	            }
-    	 	        };
-    	 	       configuration.add("FBAsyncLinker", documentLinker);
-    }
-    
-    public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration)
-    {
-        configuration.add(new LibraryMapping("fb", "com.trsvax.tapestry.facebook"));
-    }
+public class FBModule
+{
+
+	public static void bind(ServiceBinder binder)
+	{
+	}
+
+	public void contributeMarkupRenderer(
+			OrderedConfiguration<MarkupRendererFilter> configuration,
+			final Logger logger, final Environment environment)
+	{
+		MarkupRendererFilter documentLinker = new MarkupRendererFilter()
+		{
+			public void renderMarkup(MarkupWriter writer,
+					MarkupRenderer renderer)
+			{
+				FBAsyncSupportImpl linker = new FBAsyncSupportImpl(logger);
+
+				environment.push(FBAsyncSupport.class, linker);
+
+				renderer.renderMarkup(writer);
+
+				environment.pop(FBAsyncSupport.class);
+
+				linker.updateDocument(writer.getDocument());
+			}
+		};
+		configuration.add("FBAsyncLinker", documentLinker);
+	}
+
+	public static void contributeComponentClassResolver(
+			Configuration<LibraryMapping> configuration)
+	{
+		configuration.add(new LibraryMapping("fb",
+				"com.trsvax.tapestry.facebook"));
+	}
 
 }

@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,8 @@
 
 package com.trsvax.tapestry.facebook.opengraph;
 
-public class Tags {
+public class Tags
+{
 
 	private String applicationID;
 	private String title;
@@ -25,55 +25,85 @@ public class Tags {
 	private String siteName;
 	private String description;
 	private String admins;
-	
-	public String getApplicationID() {
+
+	public String getApplicationID()
+	{
 		return applicationID;
 	}
-	public void setApplicationID(String applicationID) {
+
+	public void setApplicationID(String applicationID)
+	{
 		this.applicationID = applicationID;
 	}
-	public String getTitle() {
+
+	public String getTitle()
+	{
 		return title;
 	}
-	public void setTitle(String title) {
+
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
-	public String getType() {
+
+	public String getType()
+	{
 		return type;
 	}
-	public void setType(String type) {
+
+	public void setType(String type)
+	{
 		this.type = type;
 	}
-	public String getUrl() {
+
+	public String getUrl()
+	{
 		return url;
 	}
-	public void setUrl(String url) {
+
+	public void setUrl(String url)
+	{
 		this.url = url;
 	}
-	public String getImageURL() {
+
+	public String getImageURL()
+	{
 		return imageURL;
 	}
-	public void setImageURL(String imageURL) {
+
+	public void setImageURL(String imageURL)
+	{
 		this.imageURL = imageURL;
 	}
-	public String getSiteName() {
+
+	public String getSiteName()
+	{
 		return siteName;
 	}
-	public void setSiteName(String siteName) {
+
+	public void setSiteName(String siteName)
+	{
 		this.siteName = siteName;
 	}
-	public String getDescription() {
+
+	public String getDescription()
+	{
 		return description;
 	}
-	public void setDescription(String description) {
+
+	public void setDescription(String description)
+	{
 		this.description = description;
 	}
-	public void setAdmins(String admins) {
+
+	public void setAdmins(String admins)
+	{
 		this.admins = admins;
 	}
-	public String getAdmins() {
+
+	public String getAdmins()
+	{
 		return admins;
 	}
-	
-	
+
 }

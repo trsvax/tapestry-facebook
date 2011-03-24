@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,29 +23,29 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
 
-
 /**
- * @author bfb
- * Facebook XFBML Comments component
- * @see <a href="http://developers.facebook.com/docs/reference/plugins/comments/">Comments</a>
- *
+ * @author bfb Facebook XFBML Comments component
+ * @see <a
+ *      href="http://developers.facebook.com/docs/reference/plugins/comments/">Comments</a>
+ * 
  */
 @SupportsInformalParameters
-public class Comments {
-	
+public class Comments
+{
+
 	@Inject
 	private ComponentResources componentResources;
-	
+
 	@Environmental
 	private FBAsyncSupport fbAsyncSupport;
 
 	@BeginRender
-	void beginRender(MarkupWriter writer) {
+	void beginRender(MarkupWriter writer)
+	{
 		fbAsyncSupport.render();
 		writer.element("fb:comments");
 		componentResources.renderInformalParameters(writer);
 		writer.end();
 	}
-
 
 }
