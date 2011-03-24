@@ -17,6 +17,7 @@ package com.trsvax.tapestry.facebook.services;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.Set;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.dom.Document;
 import org.apache.tapestry5.dom.Element;
+import org.apache.tapestry5.services.RequestGlobals;
 import org.slf4j.Logger;
 
 import com.trsvax.tapestry.facebook.FBInit;
@@ -32,7 +34,7 @@ import com.trsvax.tapestry.facebook.opengraph.Tags;
 public class FBAsyncSupportImpl implements FBAsyncSupport
 {
 	private final Logger logger;
-	// private final RequestGlobals requestGlobals;
+	private final RequestGlobals requestGlobals;
 	// private final String context;
 
 	private FBInit fbinit;
@@ -42,11 +44,11 @@ public class FBAsyncSupportImpl implements FBAsyncSupport
 
 	private Map<String, Set<String>> events = new HashMap<String, Set<String>>();
 
-	public FBAsyncSupportImpl(Logger logger)
+	public FBAsyncSupportImpl(Logger logger, RequestGlobals requestGlobals)
 	{
 		this.logger = logger;
 
-		// this.requestGlobals = requestGlobals;
+		this.requestGlobals = requestGlobals;
 
 		// String c = requestGlobals.getHTTPServletRequest().getContextPath();
 		// if ( c == null ) {
@@ -152,14 +154,18 @@ public class FBAsyncSupportImpl implements FBAsyncSupport
 
 		}
 		script.raw("};\n");
+		
+		Locale locale = requestGlobals.getRequest().getLocale();
 
-		script.raw("(function() {\n"
+		String fbIniFunc = String.format("(function() {\n"
 				+ "var e = document.createElement('script');\n"
 				+ "e.type = 'text/javascript';\n"
-				+ "e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';\n"
+				+ "e.src = document.location.protocol + '//connect.facebook.net/$s_$s/all.js';\n"
 				+ "e.async = true;\n"
 				+ "document.getElementById('fb-root').appendChild(e);"
-				+ "}());\n");
+				+ "}());\n", locale.getLanguage(), locale.getCountry());
+		
+		script.raw(fbIniFunc);
 	}
 
 	void renderMeta(Element head)
