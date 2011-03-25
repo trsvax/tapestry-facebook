@@ -156,14 +156,21 @@ public class FBAsyncSupportImpl implements FBAsyncSupport
 		script.raw("};\n");
 		
 		Locale locale = requestGlobals.getRequest().getLocale();
+		String lang = locale.getLanguage();
+		String country = locale.getCountry();
+		
+		if (country == null || country.trim().length() == 0)
+			country = lang.toUpperCase();
+		
+		logger.debug("Locale defined as {} {}", lang, country);
 
 		String fbIniFunc = String.format("(function() {\n"
 				+ "var e = document.createElement('script');\n"
 				+ "e.type = 'text/javascript';\n"
-				+ "e.src = document.location.protocol + '//connect.facebook.net/$s_$s/all.js';\n"
+				+ "e.src = document.location.protocol + '//connect.facebook.net/%s_%s/all.js';\n"
 				+ "e.async = true;\n"
 				+ "document.getElementById('fb-root').appendChild(e);"
-				+ "}());\n", locale.getLanguage(), locale.getCountry());
+				+ "}());\n", lang, country);
 		
 		script.raw(fbIniFunc);
 	}
