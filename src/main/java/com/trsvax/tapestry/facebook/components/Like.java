@@ -36,7 +36,7 @@ import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
 @SupportsInformalParameters
 public class Like {
 
-	@Parameter(value = "literal:edge.create,edge.remove")
+	@Parameter
 	private String events;
 	
 	@Environmental
