@@ -14,27 +14,76 @@
 
 package com.trsvax.tapestry.facebook.components;
 
+import java.util.Locale;
+
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.services.RequestGlobals;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import org.slf4j.Logger;
 
-import com.trsvax.tapestry.facebook.FBInit;
-import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
+import com.google.inject.Inject;
 
 public class AsyncInit
 {
-
-	@Parameter(autoconnect = true, required = true)
-	private FBInit fbinit;
-
+	@Inject
+	private Logger logger;
+	@Inject
+	private RequestGlobals requestGlobals;
+	
 	@Environmental
-	private FBAsyncSupport fbAsyncSupport;
+	private JavaScriptSupport javaScriptSupport;
+	
+	@Parameter(required = true)
+	private String appId;
+	@Parameter(value = "literal=true")
+	private boolean status;
+	@Parameter(value = "literal=true")
+	private boolean cookie;
+	@Parameter(value = "literal=true")
+	private boolean xfbml;
+	@Parameter(value = "literal=false")
+	private boolean logging;
 
 	@BeginRender
 	void beginRender(MarkupWriter writer)
 	{
-		fbAsyncSupport.init(fbinit);
+		// Facebook app registration and initialization
+		writer.element("div", "id", "fb-root");
+		writer.end();
+		
+		Locale locale = requestGlobals.getRequest().getLocale();
+		String lang = locale.getLanguage();
+		String country = locale.getCountry();
+		
+		if (country == null || country.trim().length() == 0)
+			country = lang.toUpperCase();
+		
+		logger.debug("Locale defined as {} {}", lang, country);
+
+		String fbDocCreate = "(function() {\n"
+				+ "var e = document.createElement('script');\n"
+				+ "e.type = 'text/javascript';\n"
+				+ "e.src = document.location.protocol + '//connect.facebook.net/%s_%s/all.js';\n"
+				+ "e.async = true;\n"
+				+ "document.getElementById('fb-root').appendChild(e);"
+				+ "}());\n";
+		
+		String fbAsyncInit = "window.fbAsyncInit = function() {"
+			 	+ "FB.init({appId: '%s', status: %s, cookie: %s, xfbml: %s, logging: %s});"
+			 	+ "};";
+		
+		javaScriptSupport.addScript(
+				InitializationPriority.EARLY,
+				fbAsyncInit,
+				appId, status, cookie, xfbml, logging);
+		
+		javaScriptSupport.addScript(
+				InitializationPriority.EARLY,
+				fbDocCreate, locale, country);
 	}
 
 }

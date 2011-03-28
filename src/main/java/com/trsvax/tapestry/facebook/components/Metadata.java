@@ -22,7 +22,6 @@ import com.trsvax.tapestry.facebook.opengraph.Tags;
 
 public class Metadata
 {
-
 	@Parameter(autoconnect = true)
 	private Tags tags;
 

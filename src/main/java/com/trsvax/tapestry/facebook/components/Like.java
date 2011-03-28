@@ -17,28 +17,23 @@ package com.trsvax.tapestry.facebook.components;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
-import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import com.trsvax.tapestry.facebook.services.FBAsyncSupport;
-
 /**
  * @author bfb Facebook XFBML Like component
- * @see <a
- *      href="http://developers.facebook.com/docs/reference/plugins/like/">Like</a>
- * 
+ * @see <a href="http://developers.facebook.com/docs/reference/plugins/like/">Like</a>
+ * @see <a href="http://developers.facebook.com/docs/reference/plugins/like-box/">Like Box</a>
  */
 @SupportsInformalParameters
 public class Like
 {
-
+	@Parameter(value = "literal=false")
+	private boolean box;
+	
 	@Parameter
 	private String events;
-
-	@Environmental
-	private FBAsyncSupport fbAsync;
 
 	@Inject
 	private ComponentResources resources;
@@ -46,20 +41,19 @@ public class Like
 	@BeginRender
 	void beginRender(MarkupWriter writer)
 	{
-		fbAsync.render();
-		writer.element("fb:like");
+		if (box)
+			writer.element("fb:like");
+		else
+			writer.element("fb:like-box");
+	
 		resources.renderInformalParameters(writer);
+		
 		writer.end();
 
 		if (events == null || events.length() == 0)
 		{
 			return;
 		}
-		for (String e : events.split(","))
-		{
-			fbAsync.subscribe(e.trim(), resources);
-		}
-
 	}
 
 }
