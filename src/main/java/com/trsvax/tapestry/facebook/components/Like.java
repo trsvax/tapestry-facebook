@@ -53,7 +53,7 @@ public class Like
 	void beginRender(MarkupWriter writer)
 	{
 		if (box)
-			writer.element("fb:like-bo");
+			writer.element("fb:like-box");
 		else
 			writer.element("fb:like");
 	
