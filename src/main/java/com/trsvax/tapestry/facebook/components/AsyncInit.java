@@ -64,7 +64,7 @@ public class AsyncInit
 		if (country == null || country.trim().length() == 0)
 			country = lang.toUpperCase();
 		
-		logger.debug("Locale defined as {} {}", lang, country);
+		logger.info("Locale defined as {} {}", lang, country);
 
 		String fbDocCreate = "(function() {\n"
 				+ "var e = document.createElement('script');\n"
@@ -79,13 +79,13 @@ public class AsyncInit
 			 	+ "};";
 		
 		javaScriptSupport.addScript(
-				InitializationPriority.IMMEDIATE,
+				InitializationPriority.EARLY,
 				fbAsyncInit,
 				appId, status, cookie, xfbml, logging);
 		
 		javaScriptSupport.addScript(
-				InitializationPriority.IMMEDIATE,
-				fbDocCreate, locale, country);
+				InitializationPriority.EARLY,
+				fbDocCreate, lang, country);
 	}
 
 }
