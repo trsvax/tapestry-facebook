@@ -15,11 +15,15 @@
 package com.trsvax.tapestry.facebook.components;
 
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
+import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 /**
  * @author bfb Facebook XFBML Like component
@@ -32,11 +36,18 @@ public class Like
 	@Parameter(value = "literal=false")
 	private boolean box;
 	
-	@Parameter
+	// This could/should be events like edge.create edge.remove to receive callbacks from
+	// Facebook when a user click the like button so an example would be:
+	// (value = "edge.create,edge.remove")
+	// I like literal prefix since I want this in tml other then code
+	@Parameter(defaultPrefix = "literal")
 	private String events;
 
 	@Inject
 	private ComponentResources resources;
+	
+	@Environmental
+	private JavaScriptSupport javaScriptSupport;
 
 	@BeginRender
 	void beginRender(MarkupWriter writer)
@@ -54,6 +65,54 @@ public class Like
 		{
 			return;
 		}
+		
+		// This should be the same for Like and Like Box elements
+		ComponentResources container = resources.getContainerResources();
+		
+		for (String event : events.split(","))
+		{
+			Link link = container.createEventLink(eventConv(event));
+			javaScriptSupport.addScript(
+					InitializationPriority.NORMAL,
+					"FB.Event.subscribe('%s', "
+						+ "function(response) {" 
+							+ "Tapestry.ajaxRequest('%s', {"
+								+ "method : 'get',"
+								+ "parameters : "
+								+ "{"
+									+ "url : response"
+								+ "}"
+							+ "});"
+						+ "});\n",
+					event, link.toURI());
+		}
+		
 	}
+	
+	/*
+	 * Code taken from ascandroli@gituhub fork...
+	 */
+	private final String eventConv(String event)
+	{
+		int length = event.length();
+		
+		StringBuilder tapestryEvent = new StringBuilder(length);
 
+		boolean capitalizeNext = false;
+
+		for (int i = 0; i < length; i++) {
+			char ch = event.charAt(i);
+
+			if (ch == '.') {
+				capitalizeNext = true;
+			} else if (capitalizeNext) {
+				tapestryEvent.append(Character.toTitleCase(ch));
+				capitalizeNext = false;
+			} else {
+				tapestryEvent.append(ch);
+			}
+		}
+
+		return tapestryEvent.toString();
+	}
 }
