@@ -53,9 +53,9 @@ public class Like
 	void beginRender(MarkupWriter writer)
 	{
 		if (box)
-			writer.element("fb:like");
+			writer.element("fb:like-bo");
 		else
-			writer.element("fb:like-box");
+			writer.element("fb:like");
 	
 		resources.renderInformalParameters(writer);
 		

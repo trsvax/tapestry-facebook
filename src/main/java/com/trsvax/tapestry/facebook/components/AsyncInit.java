@@ -46,14 +46,17 @@ public class AsyncInit
 	private boolean xfbml;
 	@Parameter(value = "literal:false")
 	private boolean logging;
-
-	@BeginRender
-	void beginRender(MarkupWriter writer)
+	
+	void setupRender(MarkupWriter writer)
 	{
 		// Facebook app registration and initialization
 		writer.element("div", "id", "fb-root");
 		writer.end();
-		
+	}
+
+	@BeginRender
+	void beginRender(MarkupWriter writer)
+	{
 		Locale locale = requestGlobals.getRequest().getLocale();
 		String lang = locale.getLanguage();
 		String country = locale.getCountry();
@@ -76,12 +79,12 @@ public class AsyncInit
 			 	+ "};";
 		
 		javaScriptSupport.addScript(
-				InitializationPriority.EARLY,
+				InitializationPriority.IMMEDIATE,
 				fbAsyncInit,
 				appId, status, cookie, xfbml, logging);
 		
 		javaScriptSupport.addScript(
-				InitializationPriority.EARLY,
+				InitializationPriority.IMMEDIATE,
 				fbDocCreate, locale, country);
 	}
 
