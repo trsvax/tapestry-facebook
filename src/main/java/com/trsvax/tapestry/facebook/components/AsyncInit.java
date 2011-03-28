@@ -79,13 +79,12 @@ public class AsyncInit
 			 	+ "};";
 		
 		javaScriptSupport.addScript(
-				InitializationPriority.EARLY,
+				InitializationPriority.IMMEDIATE,
 				fbAsyncInit,
 				appId, status, cookie, xfbml, logging);
 		
 		javaScriptSupport.addScript(
-				InitializationPriority.EARLY,
+				InitializationPriority.IMMEDIATE,
 				fbDocCreate, lang, country);
 	}
-
 }

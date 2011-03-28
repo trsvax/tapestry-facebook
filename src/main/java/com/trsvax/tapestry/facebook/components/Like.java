@@ -75,7 +75,8 @@ public class Like
 			javaScriptSupport.addScript(
 					InitializationPriority.NORMAL,
 					"FB.Event.subscribe('%s', "
-						+ "function(response) {" 
+						+ "function(response) {"
+							+ "Tapestry.debug('Calling ajax request for a like callback event...');"
 							+ "Tapestry.ajaxRequest('%s', {"
 								+ "method : 'get',"
 								+ "parameters : "
@@ -84,6 +85,11 @@ public class Like
 								+ "}"
 							+ "});"
 						+ "});\n",
+					event, link.toURI());
+			
+			javaScriptSupport.addScript(
+					InitializationPriority.NORMAL,
+					"Tapestry.debug('Event is %s and callback link created as %s');",
 					event, link.toURI());
 		}
 		
