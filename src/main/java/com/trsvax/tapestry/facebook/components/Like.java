@@ -33,7 +33,7 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 @SupportsInformalParameters
 public class Like
 {
-	@Parameter(value = "literal=false")
+	@Parameter(value = "literal:false")
 	private boolean box;
 	
 	// This could/should be events like edge.create edge.remove to receive callbacks from
