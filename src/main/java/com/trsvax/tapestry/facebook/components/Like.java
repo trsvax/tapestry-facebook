@@ -76,7 +76,7 @@ public class Like
 					InitializationPriority.NORMAL,
 					"FB.Event.subscribe('%s', "
 						+ "function(response) {"
-							+ "Tapestry.debug('Calling ajax request for a like callback event...');"
+							+ "Tapestry.debug('Ajax request called from a callback-like facebook event...');"
 							+ "Tapestry.ajaxRequest('%s', {"
 								+ "method : 'get',"
 								+ "parameters : "

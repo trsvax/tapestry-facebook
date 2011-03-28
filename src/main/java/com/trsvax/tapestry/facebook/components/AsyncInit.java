@@ -26,6 +26,10 @@ import org.apache.tapestry5.services.javascript.InitializationPriority;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.slf4j.Logger;
 
+/**
+ * 
+ *
+ */
 public class AsyncInit
 {
 	@Inject
@@ -64,27 +68,15 @@ public class AsyncInit
 		if (country == null || country.trim().length() == 0)
 			country = lang.toUpperCase();
 		
-		logger.info("Locale defined as {} {}", lang, country);
-
-		String fbDocCreate = "(function() {\n"
-				+ "var e = document.createElement('script');\n"
-				+ "e.type = 'text/javascript';\n"
-				+ "e.src = document.location.protocol + '//connect.facebook.net/%s_%s/all.js';\n"
-				+ "e.async = true;\n"
-				+ "document.getElementById('fb-root').appendChild(e);"
-				+ "}());\n";
+		logger.debug("Intializing FB object. Locale defined as {} {}", lang, country);
 		
-		String fbAsyncInit = "window.fbAsyncInit = function() {"
-			 	+ "FB.init({appId: '%s', status: %s, cookie: %s, xfbml: %s, logging: %s});"
-			 	+ "};";
+		javaScriptSupport.importJavaScriptLibrary(String.format("http://connect.facebook.net/%s_%s/all.js", lang, country));
+		
+		String fbInit = "FB.init({appId: '%s', status: %s, cookie: %s, xfbml: %s, logging: %s});";
 		
 		javaScriptSupport.addScript(
 				InitializationPriority.IMMEDIATE,
-				fbAsyncInit,
+				fbInit,
 				appId, status, cookie, xfbml, logging);
-		
-		javaScriptSupport.addScript(
-				InitializationPriority.IMMEDIATE,
-				fbDocCreate, lang, country);
 	}
 }
