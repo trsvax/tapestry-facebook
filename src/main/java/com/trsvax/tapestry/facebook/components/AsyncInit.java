@@ -38,13 +38,13 @@ public class AsyncInit
 	
 	@Parameter(required = true)
 	private String appId;
-	@Parameter(value = "literal=true")
+	@Parameter(value = "literal:true")
 	private boolean status;
-	@Parameter(value = "literal=true")
+	@Parameter(value = "literal:true")
 	private boolean cookie;
-	@Parameter(value = "literal=true")
+	@Parameter(value = "literal:true")
 	private boolean xfbml;
-	@Parameter(value = "literal=false")
+	@Parameter(value = "literal:false")
 	private boolean logging;
 
 	@BeginRender
