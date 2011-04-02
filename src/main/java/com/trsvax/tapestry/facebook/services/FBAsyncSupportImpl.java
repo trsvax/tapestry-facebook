@@ -158,6 +158,10 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 			head.element("meta", "property", "og:title", "content",
 					tags.getTitle());
 		}
+		if (tags.getDescription() != null) {
+            head.element("meta", "property", "og:description", "content",
+                    tags.getDescription());
+        }
 		if (tags.getType() != null) {
 			head.element("meta", "property", "og:type", "content",
 					tags.getType());
@@ -181,6 +185,8 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 			head.element("meta", "property", "fb:admins", "content",
 					tags.getAdmins());
 		}
+
+		
 	}
 
 
