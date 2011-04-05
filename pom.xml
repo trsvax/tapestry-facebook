@@ -64,8 +64,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Tapestry-Module-Classes>com.trsvax.tapestry.facebook.services.FBModule
-                            </Tapestry-Module-Classes>
+                            <Tapestry-Module-Classes>com.trsvax.tapestry.facebook.services.FBModule</Tapestry-Module-Classes>
                         </manifestEntries>
                     </archive>
                 </configuration>
