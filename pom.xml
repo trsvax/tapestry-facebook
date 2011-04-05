@@ -1,14 +1,11 @@
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
-
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.trsvax</groupId>
     <artifactId>tapestry-facebook</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>tapestry-facebook Tapestry 5 Application</name>
-
-    <dependencies>
+        <dependencies>
         <dependency>
             <groupId>org.apache.tapestry</groupId>
             <artifactId>tapestry-core</artifactId>
@@ -46,8 +43,8 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
 
+    </dependencies>
     <build>
         <finalName>tapestry-facebook</finalName>
         <plugins>
@@ -60,13 +57,15 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                     <optimize>true</optimize>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Tapestry-Module-Classes>com.trsvax.tapestry.facebook.services.FacebookModule</Tapestry-Module-Classes>
+                            <Tapestry-Module-Classes>com.trsvax.tapestry.facebook.services.FBModule
+                            </Tapestry-Module-Classes>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -76,6 +75,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     </build>
 
     <reporting>
+
         <!-- Adds a report detailing the components, mixins and base classes defined by this module. -->
         <plugins>
             <plugin>
@@ -90,6 +90,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     </reporting>
 
     <repositories>
+
         <!-- This repository is only needed when the tapestry-release-version is a snapshot release. -->
         <repository>
             <id>apache-snapshots</id>
@@ -98,15 +99,17 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     </repositories>
 
     <pluginRepositories>
-        <!-- As above, this can be commented out when access to the snapshot version of a Tapestry Maven plugin is not required.   -->
+
+        <!-- As above, this can be commented out when access to the snapshot version
+of a Tapestry Maven plugin is not required.   -->
         <pluginRepository>
             <id>apache-snapshots</id>
             <url>http://repository.apache.org/snapshots/</url>
         </pluginRepository>
+
     </pluginRepositories>
 
     <properties>
-        <tapestry-release-version>5.2.4</tapestry-release-version>
+        <tapestry-release-version>5.2.5</tapestry-release-version>
     </properties>
-
 </project>

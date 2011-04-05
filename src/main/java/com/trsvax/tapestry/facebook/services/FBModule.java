@@ -12,15 +12,23 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-package com.trsvax.tapestry.facebook.opengraph;
+package com.trsvax.tapestry.facebook.services;
 
-public enum ContentType
+import org.apache.tapestry5.ioc.Configuration;
+import org.apache.tapestry5.services.LibraryMapping;
+
+public class FBModule
 {
-	ACTIVITY, SPORT, BAR, COMPANY, CAFE, HOTEL, RESTAURANT, CAUSE, SPORTS_LEAGUE, SPORTS_TEAM, BAND, GOVERNMENT, NON_PROFIT, SCHOOL, UNIVERSITY, ACTOR, ATHLETE, AUTHOR, DIRECTOR, MUSICIAN, POLITICIAN, PUBLIC_FIGURE, CITY, COUNTRY, LANDMARK, STATE_PROVINCE, ALBUM, BOOK, DRINK, FOOD, GAME, PRODUCT, SONG, MOVIE, TV_SHOW, BLOG, WEBSITE, ARTICLE;
 
-	public String toString()
+//	public static void bind(ServiceBinder binder) {}
+
+	/**
+	 * Contribute the library mapping for making components accessible with fb prefix
+	 */
+	public static void contributeComponentClassResolver(
+				Configuration<LibraryMapping> configuration)
 	{
-		return name().toString().toLowerCase();
+		configuration.add(new LibraryMapping("fb", "com.trsvax.tapestry.facebook"));
 	}
 
 }

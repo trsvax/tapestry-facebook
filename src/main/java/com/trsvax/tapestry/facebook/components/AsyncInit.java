@@ -1,67 +1,82 @@
+//Copyright [2011] [Barry Books]
+
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+
+//       http://www.apache.org/licenses/LICENSE-2.0
+
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+
 package com.trsvax.tapestry.facebook.components;
+
+import java.util.Locale;
 
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.javascript.InitializationPriority;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import org.slf4j.Logger;
 
 /**
- * The most efficient way to load the SDK in your site is to load it asynchronously so it does not block loading other
- * elements of your page. This is particularly important to ensure fast page loads for users and SEO robots/spiders.
- * This is the component that does that
- * <p/>
+ * 
  *
- * @see <a href="http://developers.facebook.com/docs/reference/javascript/">JavaScript SDK</a>
  */
-public class AsyncInit {
-
+public class AsyncInit
+{
+	@Inject
+	private Logger logger;
+	@Inject
+	private RequestGlobals requestGlobals;
+	
+	@Environmental
+	private JavaScriptSupport javaScriptSupport;
+	
 	@Parameter(required = true)
 	private String appId;
-
-	@Parameter(value = "literal:true")
-	private boolean cookie;
-
-	@Parameter(value = "literal:false")
-	private boolean logging;
-
 	@Parameter(value = "literal:true")
 	private boolean status;
-
+	@Parameter(value = "literal:true")
+	private boolean cookie;
 	@Parameter(value = "literal:true")
 	private boolean xfbml;
-
-	/**
-	 * Used to include scripting code in the rendered page.
-	 */
-	@Environmental
-	private JavaScriptSupport javascriptSupport;
-
-	@BeginRender
-	void beginRender(MarkupWriter writer) {
-
+	@Parameter(value = "literal:false")
+	private boolean logging;
+	
+	void setupRender(MarkupWriter writer)
+	{
+		// Facebook app registration and initialization
 		writer.element("div", "id", "fb-root");
 		writer.end();
-		javascriptSupport.addScript(InitializationPriority.IMMEDIATE,
-				"window.fbAsyncInit = function() {" +
-					"FB.init({appId: '%s', status: %s, cookie: %s, xfbml: %s, logging: %s});" +
-				"};", appId, status, cookie, xfbml, logging);
-
-		javascriptSupport.addScript(InitializationPriority.IMMEDIATE, "(function() {" +
-				"var e = document.createElement('script');" +
-				"e.async = true;" +
-				"e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';" +
-				"document.getElementById('fb-root').appendChild(e);" +
-				"}());");
-
 	}
 
-	/**
-	 * Prevent the body from rendering.
-	 */
-	boolean beforeRenderBody() {
-		return false;
+	@BeginRender
+	void beginRender(MarkupWriter writer)
+	{
+		Locale locale = requestGlobals.getRequest().getLocale();
+		String lang = locale.getLanguage();
+		String country = locale.getCountry();
+		
+		if (country == null || country.trim().length() == 0)
+			country = lang.toUpperCase();
+		
+		logger.debug("Intializing FB object. Locale defined as {} {}", lang, country);
+		
+		javaScriptSupport.importJavaScriptLibrary(String.format("http://connect.facebook.net/%s_%s/all.js", lang, country));
+		
+		String fbInit = "FB.init({appId: '%s', status: %s, cookie: %s, xfbml: %s, logging: %s});";
+		
+		javaScriptSupport.addScript(
+				InitializationPriority.IMMEDIATE,
+				fbInit,
+				appId, status, cookie, xfbml, logging);
 	}
 }
-
