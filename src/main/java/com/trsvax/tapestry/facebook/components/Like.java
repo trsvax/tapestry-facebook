@@ -98,7 +98,7 @@ public class Like
 	/*
 	 * Code taken from ascandroli@gituhub fork...
 	 */
-	private final String eventConv(String event)
+	static final String eventConv(String event)
 	{
 		int length = event.length();
 		
