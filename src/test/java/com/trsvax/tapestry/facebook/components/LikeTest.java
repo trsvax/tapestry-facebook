@@ -1,10 +1,11 @@
-package com.trsvax.tapestry.facebook;
+package com.trsvax.tapestry.facebook.components;
 
 import com.trsvax.tapestry.facebook.FacebookUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class FacebookUtilsTest {
+public class LikeTest
+{
 
 
 	@Test
