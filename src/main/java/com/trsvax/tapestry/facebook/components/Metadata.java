@@ -1,4 +1,3 @@
-
 //Copyright [2011] [Barry Books]
 
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,42 +20,58 @@ import org.apache.tapestry5.annotations.Parameter;
 
 import com.trsvax.tapestry.facebook.opengraph.Tags;
 
-public class Metadata {
-	
-	@Parameter(autoconnect=true)
+public class Metadata
+{
+	@Parameter(autoconnect = true)
 	private Tags tags;
-	
+
 	@BeginRender
-	void beginRender(MarkupWriter writer) {
-		if ( tags == null ) {
+	void beginRender(MarkupWriter writer)
+	{
+		if (tags == null)
+		{
 			return;
 		}
-		if ( tags.getTitle() != null ) {
-			writer.element("meta", "property","og:title","content",tags.getTitle());
+		if (tags.getTitle() != null)
+		{
+			writer.element("meta", "property", "og:title", "content",
+					tags.getTitle());
 			writer.end();
 		}
-		if ( tags.getType() != null ) {
-			writer.element("meta", "property","og:type","content",tags.getType());
+		if (tags.getType() != null)
+		{
+			writer.element("meta", "property", "og:type", "content",
+					tags.getType());
 			writer.end();
 		}
-		if ( tags.getImageURL() != null ) {
-			writer.element("meta", "property","og:image","content",tags.getImageURL());
+		if (tags.getImageURL() != null)
+		{
+			writer.element("meta", "property", "og:image", "content",
+					tags.getImageURL());
 			writer.end();
 		}
-		if ( tags.getUrl() != null ) {
-			writer.element("meta", "property","og:url","content",tags.getUrl());
+		if (tags.getUrl() != null)
+		{
+			writer.element("meta", "property", "og:url", "content",
+					tags.getUrl());
 			writer.end();
 		}
-		if ( tags.getSiteName() != null ) {
-			writer.element("meta", "property","og:site_name","content",tags.getSiteName());
+		if (tags.getSiteName() != null)
+		{
+			writer.element("meta", "property", "og:site_name", "content",
+					tags.getSiteName());
 			writer.end();
 		}
-		if ( tags.getApplicationID() != null ) {
-			writer.element("meta", "property","fb:app_id","content",tags.getApplicationID());
+		if (tags.getApplicationID() != null)
+		{
+			writer.element("meta", "property", "fb:app_id", "content",
+					tags.getApplicationID());
 			writer.end();
 		}
-		if ( tags.getAdmins() != null ) {
-			writer.element("meta", "property","fb:admins","content",tags.getAdmins());
+		if (tags.getAdmins() != null)
+		{
+			writer.element("meta", "property", "fb:admins", "content",
+					tags.getAdmins());
 			writer.end();
 		}
 	}

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.trsvax</groupId>
     <artifactId>tapestry-facebook</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.0-alpha-1</version>
     <packaging>jar</packaging>
     <name>tapestry-facebook Tapestry 5 Application</name>
         <dependencies>
@@ -57,36 +57,23 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                     <optimize>true</optimize>
                 </configuration>
             </plugin>
-            
+
             <plugin>
-           <groupId>org.apache.maven.plugins</groupId>
-           <artifactId>maven-jar-plugin</artifactId>
-           <configuration>
-           <archive>
-             <manifestEntries>
-               <Tapestry-Module-Classes>com.trsvax.tapestry.facebook.services.FBModule</Tapestry-Module-Classes>
-             </manifestEntries>
-           </archive>
-           </configuration>
-       </plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>com.trsvax.tapestry.facebook.services.FBModule</Tapestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
 
         </plugins>
     </build>
 
-    <reporting>
-
-        <!-- Adds a report detailing the components, mixins and base classes defined by this module. -->
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tapestry</groupId>
-                <artifactId>tapestry-component-report</artifactId>
-                <version>${tapestry-release-version}</version>
-                <configuration>
-                    <rootPackage>com.trsvax.tapestry.facebook</rootPackage>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+    <reporting />
 
     <repositories>
 
@@ -109,6 +96,6 @@ of a Tapestry Maven plugin is not required.   -->
     </pluginRepositories>
 
     <properties>
-        <tapestry-release-version>5.2.4</tapestry-release-version>
+        <tapestry-release-version>5.3.1</tapestry-release-version>
     </properties>
 </project>

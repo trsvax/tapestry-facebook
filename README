@@ -19,9 +19,9 @@ This Tapestry component library implements the Facebook XFBML async javascript l
 Currently to use the components you need to build the source then add the following to your pom file.
 
      <dependency>
-    	<groupId>com.trsvax</groupId>
-    	<artifactId>tapestry-facebook</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
+        <groupId>com.trsvax</groupId>
+        <artifactId>tapestry-facebook</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
 
