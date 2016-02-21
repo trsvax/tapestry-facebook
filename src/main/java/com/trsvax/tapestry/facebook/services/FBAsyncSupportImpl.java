@@ -26,6 +26,7 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.dom.Document;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.services.RequestGlobals;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.slf4j.Logger;
 
 import com.trsvax.tapestry.facebook.FBInit;
@@ -35,6 +36,7 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 	private final Logger logger;
 	private final RequestGlobals requestGlobals;
 	private final String context;
+	private final JavaScriptSupport javaScriptSupport;
 	
 	private FBInit fbinit;
 	private Tags tags;
@@ -43,9 +45,10 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 
 	private Map<String, Set<String>> events = new HashMap<String, Set<String>>();
 
-	public FBAsyncSupportImpl(Logger logger, RequestGlobals requestGlobals) {
+	public FBAsyncSupportImpl(Logger logger, RequestGlobals requestGlobals, JavaScriptSupport javascriptSupport) {
 		this.logger = logger;
 		this.requestGlobals = requestGlobals;
+		this.javaScriptSupport = javascriptSupport;
 		String c = requestGlobals.getHTTPServletRequest().getContextPath();
 		if ( c == null ) {
 			c = "/";
@@ -93,6 +96,11 @@ public class FBAsyncSupportImpl implements FBAsyncSupport {
 
 	public void updateDocument(Document document) {
 		if ( !render ) {
+			return;
+		}
+
+		if ( requestGlobals.getRequest().isXHR()) {
+			javaScriptSupport.addScript("window.fbAsyncInit();");
 			return;
 		}
 		if (tags != null) {
