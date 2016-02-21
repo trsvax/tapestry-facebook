@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html t:type="layout" 
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      <body>
+      
+      <t:fb.like send="true" width="literal:450" showFaces="true" href="href"/>
+      <t:fb.loginButton />
+      
+      <t:eventlink event="liked">like</t:eventlink>
+      </body>
+      
+</html>

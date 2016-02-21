@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+  <head>
+  <meta property="fb:admins" content="100000917313822"/>
+  <meta property="fb:app_id" content="193102360713707"/>
+  
+  <meta property="og:title" content="test" />
+<meta property="og:url" content="http://dev.mymacdns.com/tapestry-facebook/" />
+<meta property="og:site_name" content="Trsvax" />
+<meta property="fb:admins" content="100000917313822" />
+  </head>
+  <body>
+            <t:body/>
+  </body>
+</html>
