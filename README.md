@@ -1,3 +1,5 @@
+No Longer maintained moving to node/graphql/react
+---
 
 //Copyright [2011] [Barry Books]
 
